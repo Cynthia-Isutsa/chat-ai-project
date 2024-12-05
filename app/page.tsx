@@ -32,6 +32,17 @@ export default function Chat() {
   const [showChatIcon, setShowChatIcon] = useState(true);
   const chatIconRef = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+ 
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    stop,
+    reload,
+    error,
+  } = useChat({ api: "api/openai" });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,17 +66,6 @@ export default function Chat() {
     setIsChatOPen(!isChatOpen);
   };
 
- 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    stop,
-    reload,
-    error,
-  } = useChat({ api: "api/gemini" });
   useEffect(()=> {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
@@ -138,7 +138,7 @@ export default function Chat() {
                         }`}
                       >
                         <div
-                          className={`inline-block rounded-lg ${
+                          className={`inline-block p-4 rounded-lg ${
                             message.role === "user"
                               ? "bg-primary text-primary-foreground"
                               : "bg-muted"
